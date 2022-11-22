@@ -1,0 +1,43 @@
+<head>
+  <meta charset="UTF-8">
+  <title>D3 Dashboard</title>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+  <link rel="stylesheet" href="map.css">
+
+</head>
+<body>
+  <div id="nav">
+    <h2>Inflation Dashboard</h2>
+    <p>
+      Explore Local and Dollar Prices.
+      Current year: <span id="year-val"></span>
+      <input id="year" type="range" step="1">
+    </p>
+    <p>
+      Choose between Local price or Dollar Price.
+      <input type="radio" name="data-type" value="emissions" checked>
+      <label>Local Prices</label>
+      <input type="radio" name="data-type" value="emissionsPerCapita">
+      <label>Dollar Prices</label>
+    </p>
+    <p>Click on a country to see its trends by year.</p>
+  </div>
+  <section class="container">
+    <div class="chart-container">
+      <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="map"></svg>
+    </div>
+    <div class="chart-container right">
+    
+    <style>   #legend svg {
+      height: 300px;}</style> 
+   
+      <svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" id="bar"></svg>
+    </div>
+
+  </section>
+  <div class="tooltip"></div>
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="https://unpkg.com/topojson@3"></script>
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="map_v6.js"></script>
+</body>
