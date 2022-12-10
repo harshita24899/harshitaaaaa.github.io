@@ -139,7 +139,7 @@ function drawMap(geoData, climateData, year, dataType) {
     d.properties = countries.find(c => c.year === year) || { country: name };
   });
 
-  var colors = ["#A0D2E7", "#81B1D5", "#3D60A7", "#26408B","#0F084B"];
+  var colors = ["#cfe2f3", "#81B1D5", "#3D60A7", "#26408B","#0F084B"];
 
   var domains = {
     emissions: [1.1,7.6,25.5, 118,4e6],
