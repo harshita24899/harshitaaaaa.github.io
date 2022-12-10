@@ -15,7 +15,10 @@ d3.queue()
   if (error) throw error;
  
   var extremeYears = d3.extent(data, d => d.year);
-  var currentYear = extremeYears[0];
+  var currentYear =  extremeYears[0];
+ 
+  console.log(extremeYears[0]);
+  console.log(typeof(currentYear));
   var currentDataType = d3.select('input[name="data-type"]:checked')
                           .attr("value");
   var geoData = topojson.feature(mapData, mapData.objects.countries).features;
@@ -30,17 +33,27 @@ d3.queue()
   drawMap(geoData, data, currentYear, currentDataType);
   //drawPie(data, currentYear);
   drawBar(data, currentDataType, "");
+  
+  
+  function getyear(){
+    var year=document.getElementById("year").value;
+    console.log(year);
+    console.log(typeof(year));
+    return(year)
+  }
  
   d3.select("#year")
       .property("min", currentYear)
       .property("max", extremeYears[1])
       .property("value", currentYear)
       .on("input", () => {
-        currentYear = +d3.event.target.value;
+        currentYear = getyear();//+d3.event.target.value;
         drawMap(geoData, data, currentYear, currentDataType);
-        drawPie(data, currentYear);
         highlightBars(currentYear);
+        
       });
+      
+  //console.log(currentYear);
  
   d3.selectAll('input[name="data-type"]')
       .on("change", () => {
@@ -139,12 +152,14 @@ function drawMap(geoData, climateData, year, dataType) {
     d.properties = countries.find(c => c.year === year) || { country: name };
   });
 
-  var colors = ["#cfe2f3", "#81B1D5", "#3D60A7", "#26408B","#0F084B"];
+ var colors = ["#A0D2E7", "#81B1D5", "#3D60A7", "#26408B","#0F084B"];
 
-  var domains = {
+ var domains = {
     emissions: [1.1,7.6,25.5, 118,4e6],
     emissionsPerCapita: [0.63, 2.40, 3.11, 4.08,8.31]
   };
+  //var domains= document.getElementById("year");
+  
 
   var mapColorScale = d3.scaleLinear()
                         .domain(domains[dataType])
@@ -184,6 +199,77 @@ function drawMap(geoData, climateData, year, dataType) {
 function graphTitle(str) {
   return str.replace(/[A-Z]/g, c => " " + c.toLowerCase());
 }
+
+/******************************* PIE.JS ***********************************************/
+/*
+function createPie(width, height) {
+  var pie = d3.select("#pie")
+                .attr("width", width)
+                .attr("height", height)
+ 
+  pie.append("g")
+      .attr("transform", `translate(${width / 2}, ${height / 2 + 10})`)
+      .classed("chart", true);
+ 
+  pie.append("text")
+       .attr("x", width / 2)
+       .attr("y", "1em")
+       .attr("font-size", "1.5em")
+       .style("text-anchor", "middle")
+       .classed("pie-title", true);
+}
+
+function drawPie(data, currentYear) {
+  var pie = d3.select("#pie");
+ 
+  var arcs = d3.pie()
+               .sort((a,b) => {
+                 if (a.continent < b.continent) return -1;
+                 if (a.continent > b.continent) return 1;
+                 return a.emissions - b.emissions;
+               })
+               .value(d => d.emissions);
+ 
+  var path = d3.arc()
+               .outerRadius(+pie.attr("height") / 2 - 50)
+               .innerRadius(0);
+ 
+  var yearData = data.filter(d => d.year === currentYear);
+  var continents = [];
+  for (let i = 0; i < yearData.length; i++) {
+    var continent = yearData[i].country;
+    if (!continents.includes(continent)) {
+      continents.push(continent);
+    }
+  }
+ 
+  var colorScale = d3.scaleOrdinal()
+                     .domain(continents)
+                     .range(["#ab47bc", "#7e57c2", "#26a69a", "#42a5f5", "#78989c"]);
+ 
+  var update = pie
+                .select(".chart")
+                .selectAll(".arc")
+                .data(arcs(yearData));
+ 
+  update
+    .exit()
+    .remove();
+ 
+  update
+    .enter()
+      .append("path")
+      .classed("arc", true)
+      .attr("stroke", "#dff1ff")
+      .attr("stroke-width", "0.25px")
+    .merge(update)
+      .attr("fill", d => colorScale(d.data.continent))
+      .attr("d", path);
+ 
+  pie.select(".pie-title")
+       .text(`Total emissions by continent and region, ${currentYear}`);
+}
+*/
 /******************************* BAR.JS ***********************************************/
 
 function createBar(width, height) {
