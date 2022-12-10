@@ -139,7 +139,7 @@ function drawMap(geoData, climateData, year, dataType) {
     d.properties = countries.find(c => c.year === year) || { country: name };
   });
 
-  var colors = ["#ff00ff", "#00ff00", "#ffff00", "#f0f0f0","0f0f0f"];
+  var colors = ["#A0D2E7", "#81B1D5", "#3D60A7", "#26408B","#0F084B"];
 
   var domains = {
     emissions: [1.1,7.6,25.5, 118,4e6],
@@ -184,77 +184,6 @@ function drawMap(geoData, climateData, year, dataType) {
 function graphTitle(str) {
   return str.replace(/[A-Z]/g, c => " " + c.toLowerCase());
 }
-
-/******************************* PIE.JS ***********************************************/
-/*
-function createPie(width, height) {
-  var pie = d3.select("#pie")
-                .attr("width", width)
-                .attr("height", height)
- 
-  pie.append("g")
-      .attr("transform", `translate(${width / 2}, ${height / 2 + 10})`)
-      .classed("chart", true);
- 
-  pie.append("text")
-       .attr("x", width / 2)
-       .attr("y", "1em")
-       .attr("font-size", "1.5em")
-       .style("text-anchor", "middle")
-       .classed("pie-title", true);
-}
-
-function drawPie(data, currentYear) {
-  var pie = d3.select("#pie");
- 
-  var arcs = d3.pie()
-               .sort((a,b) => {
-                 if (a.continent < b.continent) return -1;
-                 if (a.continent > b.continent) return 1;
-                 return a.emissions - b.emissions;
-               })
-               .value(d => d.emissions);
- 
-  var path = d3.arc()
-               .outerRadius(+pie.attr("height") / 2 - 50)
-               .innerRadius(0);
- 
-  var yearData = data.filter(d => d.year === currentYear);
-  var continents = [];
-  for (let i = 0; i < yearData.length; i++) {
-    var continent = yearData[i].country;
-    if (!continents.includes(continent)) {
-      continents.push(continent);
-    }
-  }
- 
-  var colorScale = d3.scaleOrdinal()
-                     .domain(continents)
-                     .range(["#ab47bc", "#7e57c2", "#26a69a", "#42a5f5", "#78989c"]);
- 
-  var update = pie
-                .select(".chart")
-                .selectAll(".arc")
-                .data(arcs(yearData));
- 
-  update
-    .exit()
-    .remove();
- 
-  update
-    .enter()
-      .append("path")
-      .classed("arc", true)
-      .attr("stroke", "#dff1ff")
-      .attr("stroke-width", "0.25px")
-    .merge(update)
-      .attr("fill", d => colorScale(d.data.continent))
-      .attr("d", path);
- 
-  pie.select(".pie-title")
-       .text(`Total emissions by continent and region, ${currentYear}`);
-}
-*/
 /******************************* BAR.JS ***********************************************/
 
 function createBar(width, height) {
