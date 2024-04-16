@@ -1,6 +1,6 @@
 d3.queue()
   .defer(d3.json, "https://unpkg.com/world-atlas@1.1.4/world/50m.json")
-  .defer(d3.csv, "https://raw.githubusercontent.com/harshitaaaaa/679_Project/main/final.csv", row => {
+  .defer(d3.csv, "https://raw.githubusercontent.com/harshita24899/679_Project/main/final.csv", row => {
   return {
  
     country: row.name,
